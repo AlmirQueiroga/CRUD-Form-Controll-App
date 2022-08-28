@@ -1,20 +1,27 @@
 import {  Box, Tab } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import CadastroForm from "../../components/CadastroForm/CadastroForm";
 import { Background, BackgroundCard } from "./home.styles";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Lista from "../../components/Lista/Lista";
-import { Provider } from "react-redux";
-import { store } from "../../store";
+import { useDispatch } from "react-redux";
+import { Load } from "../../store/load/actions";
+import api from "../../resources/api";
 
 export default function Home(): JSX.Element{
 
   const [tabs, setTabs] = React.useState(1)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    api.get('/users').then((res: any) => {
+      dispatch(Load(res.data))
+    })
+  }, [])
 
 	return(
-    <Provider store={store}>
       <Background>
-        <BackgroundCard list={tabs === 2}>
+        <BackgroundCard>
           <TabContext value={tabs.toString()}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList aria-label="navgation-tabs">
@@ -28,6 +35,5 @@ export default function Home(): JSX.Element{
           <br/>
         </BackgroundCard>       
       </Background>
-    </Provider>
 	)
 }

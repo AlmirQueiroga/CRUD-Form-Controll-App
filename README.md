@@ -92,9 +92,6 @@ objeto que é incorporado para edição e alterado a organização de botões e 
 Os seguintes passos estão planejados para desenvolvimento e maior complexidade do teste entregue:
 
 Utilizar máscara de email e phone
-Transferir useEffect de chamada da lista para Redux para evitar carregamento desnecessário
-Ocultar senha na lista de exibição
-Botão para exibir senha no cadastro e lista
 Autocompletar city,street com zipcode
 Implementação de Geocoder para capturar objeto Geolocalização a partir do ZipCode
 Design de Cards de exibição mais bonitos

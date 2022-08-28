@@ -11,13 +11,9 @@ const Background = styled.div`
   align-items: center;
 `
 
-interface BackgroundCardProps {
-  list: boolean
-}
-
 const BackgroundCard = styled(Card)`
   padding:25px;
-  width: ${({ list }: BackgroundCardProps) => list ? 400 : 550}px;;
+  width: 550px;;
   display: flex;
   justify-content: center;
   align-items: center;

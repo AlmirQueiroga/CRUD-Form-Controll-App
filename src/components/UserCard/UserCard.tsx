@@ -1,12 +1,16 @@
-import {Card, CardContent, Typography} from '@mui/material/';
+import React, { useState } from 'react'
+import {Card, CardContent, InputAdornment, Typography} from '@mui/material/';
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 interface CardProps{
 	item: any
 }
 
 export default function UserCard(props: CardProps): JSX.Element {
-
+	const [showPassword, setShowPassword] = useState<boolean>(false)
 	const { item } = props
+
+	const handlePassword = () => setShowPassword(!showPassword)
 
     return(
 			<Card sx={{ minWidth: 275, backgroundColor: 'black', color: 'white',marginBottom:'20px' }}>
@@ -20,8 +24,9 @@ export default function UserCard(props: CardProps): JSX.Element {
 					<Typography sx={{ mb: 1.5, marginTop:'10px' }} >
 						Username: {item.username}
 					</Typography>
-					<Typography sx={{ mb: 1.5 }} >
-						Password: {item.password}
+					<Typography sx={{ mb: 1.5, display: 'flex', alignContent: 'center', justifyContent: 'space-between' }}
+					>
+						Password: {showPassword ? item.password : '*********'}  {showPassword ? <VisibilityOff onClick={handlePassword} /> : <Visibility onClick={handlePassword}/>}
 					</Typography>
 					<Typography sx={{ mb: 1.5 }} >
 						Lat: {item.address.geolocation.lat}

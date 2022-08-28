@@ -5,24 +5,26 @@ import * as Yup from 'yup'
 import api from "../../resources/api";
 import { TextInput, Form } from "./cadastro.styles";
 import { useSelector, useDispatch } from 'react-redux';
-import { Button } from "@mui/material";
+import { Button, InputAdornment } from "@mui/material";
 import { EditarState } from '../../store/edit/type.d';
 
 import { removeEditar } from '../../store/edit/actions'
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface CadastroFormProps {
   onFinish: () => void
 }
 
 export default function CadastroForm(props: CadastroFormProps): JSX.Element {
-  const initialValues = useSelector((state: EditarState) => state.editar)
+  const initialValues: Cadastro | undefined = useSelector((state: any) => state.editar.editar)
   const dispatch = useDispatch()
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const [enableReinitialize, setEnableReinitialize] = useState<boolean>(false)
   const { onFinish } = props
 
   const onSubmit = (value: any, formikHelpers: FormikHelpers<Cadastro>) => {
     let valid = true
-    console.log(value)
+    
     Object.keys(value).forEach(key => {
       if (value[key] === '' || value[key] === undefined) {
         setFieldError(key, 'Campo obrigatório')
@@ -45,13 +47,15 @@ export default function CadastroForm(props: CadastroFormProps): JSX.Element {
       
       if(initialValues){
         api.put(`/users/${initialValues.id}`, values)
-        onFinish()
+        dispatch(removeEditar())
       }else{
-        api.post("/users",values)
-        onFinish()
+        api.post("/users",values).then(res=>console.log(res))
       }
+      onFinish()
     }
   }
+
+  const handlePassword = () => setShowPassword(!showPassword)
 
   
   const { values, setFieldError, setFieldValue,  errors, handleSubmit, isValid, handleBlur } = useFormik<Cadastro>({
@@ -69,8 +73,12 @@ export default function CadastroForm(props: CadastroFormProps): JSX.Element {
       address : {
         city:'',
         street:'',
-        number:'',
-        zipcode:''
+        number:0,
+        zipcode:'',
+        geolocation: {
+          lat: 0,
+          long: 0
+        }
       },
       phone: ''
     },
@@ -126,10 +134,16 @@ export default function CadastroForm(props: CadastroFormProps): JSX.Element {
         <div data-testid="password">
           <TextInput
             label="Password"
+            type={showPassword ? 'text' : 'password'}
             value={values.password}
-            type="password"
             onChange={e => setFieldValue('password', e.target.value)}
             error={errors.password !== undefined}
+            InputProps={{
+              endAdornment: 
+                <InputAdornment position='end'>
+                  {showPassword ? (<VisibilityOff onClick={handlePassword} />) : (<Visibility onClick={handlePassword} />)}
+                </InputAdornment>
+            }}
             onBlur={handleBlur}
           />
         </div>

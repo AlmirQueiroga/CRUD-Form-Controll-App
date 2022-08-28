@@ -1,8 +1,8 @@
-import { createStore, Store, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, Store, applyMiddleware, combineReducers, CombinedState, Reducer } from 'redux'
 import EditReducer from './edit/reducer'
-import { DispatchType, EditarAction, EditarState } from './edit/type.d'
+import LoadReducer from './load/reducer'
 
-export const store: Store<EditarState, EditarAction> & {
-    dispatch: DispatchType,
-} = createStore(EditReducer, applyMiddleware(thunk))
+export const store = createStore(combineReducers({
+    editar: EditReducer,
+    load: LoadReducer
+}))
