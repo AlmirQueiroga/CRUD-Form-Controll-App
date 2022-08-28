@@ -42,7 +42,7 @@ export default function Lista(props: listaProps): JSX.Element {
   
 
   return(
-    <div style={{overflow: 'auto',flex: 1, maxHeight:'600px', marginLeft:'120px'}}>
+    <div style={{overflow: 'auto',flex: 1, maxHeight:'600px', marginLeft:'100px'}}>
       <Grid container spacing={1} style={{minWidth:200}}>
 
         {list?.map((item:any,index: number)=>(

@@ -13,7 +13,7 @@ export default function UserCard(props: CardProps): JSX.Element {
 	const handlePassword = () => setShowPassword(!showPassword)
 
     return(
-			<Card sx={{ minWidth: 275, backgroundColor: 'black', color: 'white',marginBottom:'20px' }}>
+			<Card sx={{ minWidth: 300, backgroundColor: 'black', color: 'white',marginBottom:'20px' }}>
 				<CardContent>	
 					<Typography variant="h5" component="div">
 						{`${item.name.firstname} ${item.name.lastname}`}
