@@ -1,6 +1,3 @@
-# Desafio Edesoft
-
-Este desafio consiste na elaboração de um aplicativo CRUD.
 
 ## Início do Desenvolvimento 
 
